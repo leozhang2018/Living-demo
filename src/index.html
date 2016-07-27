@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Living Download</title>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="#TODO">
+            <!-- transition -->
+            <img class="logo" src="./img/logo.png">
+        </div>
+        <div class="title">
+            <p>Living</p>
+        </div>
+        <div class="subtitle">
+            <p id="subtitle">{{message}}</p>
+        </div>
+
+        <div class="download">
+            <a class="download-btn" href="#TODO"><span class="apple-logo"></span>iOS</a>
+        </div>
+        <div class="language">
+            <div class="lang-container">
+                <span v-bind:class="{'zh-cn':on,'opacity':cn_opacity}" v-on:click="zh_cn">中文</span>
+                <span v-bind:class="{'us-en':on,'opacity':en_opacity}" v-on:click="us_en">EN</span>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer"><span class="copyright">© 2011 - 2016 Qiniu Inc. All Rights Reserved</span></footer>
+    <script src="./js/vue.js"></script>
+    <script type="text/javascript">
+        var subtitle = new Vue({
+            el: '#subtitle',
+            data: {
+                message: '现实生活，实时展现'
+            }
+        })
+
+        var vm = new Vue({
+            el: '.lang-container',
+            // 在 `methods` 对象中定义方法
+            //初始状态语言为 CN
+            data: {
+                'on': true,
+                'off': false,
+                'cn_opacity': false,
+                'en_opacity': true
+            },
+            methods: {
+                zh_cn: function(event) {
+                    // `event` 是原生 DOM 事件
+                    this.en_opacity = true
+                    this.cn_opacity = false
+                    console.log(event.target.className)
+                    console.log(subtitle.message)
+                    subtitle.message = '现实生活，实时展现'
+                    console.log(subtitle.message)
+
+
+
+                },
+                us_en: function(event) {
+                    this.en_opacity = false
+                    this.cn_opacity = true
+                    console.log(event.target.className)
+                    console.log(subtitle.message)
+                    subtitle.message = 'Real life in real-time.'
+                    console.log(subtitle.message)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

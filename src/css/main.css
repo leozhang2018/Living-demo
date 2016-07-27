@@ -1,0 +1,123 @@
+html {
+    height: 100%;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft Yahei", Arial, Verdana, sans-serif;
+}
+body {
+    display: flex;
+    align-items: center;
+    /*justify-content: center;*/
+    flex-direction: column;
+    height: 100%;
+    background: linear-gradient(-180deg, #E2E3E3 0%, #FFFFFF 59%, #FFFFFF 100%) no-repeat;
+}
+.hidden, iframe {
+    display: none
+}
+dd, dl, dt, li, ol, ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0
+}
+a, a:focus, a:hover, a:visited {
+    text-decoration: none;
+    outline: 0
+}
+#app {
+    color: #2c3e50;
+    /*position: absolute;*/
+    margin-top: 15.27777777%;
+    max-width: 600px;
+    font-family: Source Sans Pro, Helvetica, sans-serif;
+    text-align: center;
+}
+.logo {
+    width: 100px;
+    height: 100px;
+    box-shadow: 0px 10px 25px rgba(136, 136, 136, 0.5);
+    border-radius: 17px;
+}
+.title {
+    margin-top: 51px;
+    margin-bottom: 19px;
+}
+.title> p {
+    font-family: Sailec-Medium;
+    font-size: 26px;
+    color: #303030;
+    text-transform: uppercase;
+    letter-spacing: 0px;
+}
+.subtitle {
+    margin-top: 19px;
+}
+.subtitle> p {
+    font-family: SFUIText-Light;
+    font-size: 18px;
+    color: #4E4E4E;
+    letter-spacing: 0.2px;
+}
+.download {
+    margin-top: 71px;
+}
+.download .download-btn {
+    display: inline-block;
+    width: 160px;
+    height: 56px;
+    background: rgba(0, 0, 0, 0.92);
+    box-shadow: 0px 10px 24px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 100px;
+    font-family: SFUIText-Light;
+    font-size: 18px;
+    color: #FFFFFF;
+    transition: all .3s ease;
+}
+.download .download-btn:hover {
+    box-shadow: 0px 10px 24px 0px rgba(0, 0, 0, 0.4);
+}
+.download .download-btn .apple-logo {
+    display: inline-block;
+    background: url(../img/apple-logo.png) no-repeat;
+    margin-top: 19px;
+    padding-left: 13px;
+    height: 18px;
+    width: 15px;
+    background-size: contain;
+}
+.language {
+    margin-top: 59px;
+}
+.language .lang-container {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 61px;
+    margin: 0 auto;
+}
+.language .lang-container .zh-cn {
+    cursor: pointer;
+    font-family: PingFangSC-Regular;
+    font-size: 11.5px;
+    color: #000000;
+}
+.language .lang-container .us-en {
+    cursor: pointer;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #000000;
+}
+.language .lang-container .opacity {
+    opacity: 0.3;
+}
+.footer {
+height: 13px;
+margin-top: 185px;
+margin-bottom: 62px;
+}
+.footer .copyright {
+    /*bottom: 6.888888888888%;*/
+    line-height: 13px;
+    text-align: center;
+    opacity: 0.2;
+    font-family: SFUIText-Regular;
+    font-size: 11px;
+    color: #000000;
+}

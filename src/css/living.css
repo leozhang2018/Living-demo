@@ -1,0 +1,161 @@
+body {
+    /*background-color: #000000;*/
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+}
+
+video {
+    width: 100%;
+    min-height: 100%;
+    margin-bottom: 16%;
+    position: fixed;
+    background-color: #000000;
+}
+
+.videoNormal {
+    bottom: 0;
+    left: 0;
+}
+
+.videoHide {
+    bottom: 100%;
+    left: 0;
+}
+
+#videoCover {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 16%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+}
+
+#videoCover img {
+    width: 20%;
+    left: 40%;
+    top: 50%;
+    position: relative;
+}
+
+#bottomBar {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #ffffff;
+}
+
+#hostPortrait {
+    width: 13.33%;
+    margin: 1.33% 1.33% 1.33% 2.67%;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+#liveWrapper {
+    width: 37%;
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#liveText {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #262626;
+    font-size: 1.17em;
+    line-height: 150%;
+}
+
+#liveNum {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #262626;
+    font-size: 1em;
+    line-height: 150%;
+}
+
+#bottomBtn {
+    width: 38%;
+    margin: 1.33% 2.67% 1.33% 2.67%;
+    display: inline-block;
+    background-color: #734096;
+    text-align: center;
+    border-radius: 50px;
+}
+
+#bottomBtn img {
+    width: 12%;
+    margin: 4% 2% 4% 0;
+    vertical-align: middle;
+}
+
+#bottomBtn span {
+    color: #ffffff;
+    font-size: 1.5em;
+    line-height: 278%;
+    vertical-align: middle;
+}
+
+#downloadBox {
+    width: 68%;
+    position: fixed;
+    top: 25%;
+    left: 16%;
+    background-color: #ffffff;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    overflow: hidden;
+    text-align: center;
+}
+
+#downloadBoxCloseIconWrapper {
+    overflow: hidden;
+}
+
+#downloadBoxCloseIcon {
+    width: 5%;
+    padding: 3% 3% 0 0;
+    float: right;
+}
+
+#downloadBoxPortrait {
+    width: 28.8%;
+    margin: 3% 0 0 0;
+    border-radius: 50%;
+}
+
+#downloadBox p {
+    width: 80%;
+    margin: 7.69% 0 7.69% 0;
+    text-align: center;
+    color: #262626;
+    font-size: 1.33em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+#confirmDownloadBtn {
+    margin: 0 0 7.69% 0;
+    padding: 0 5% 0 5%;
+    color: #ffffff;
+    font-size: 1.33em;
+    line-height: 250%;
+    text-align: center;
+    background-color: #734096;
+    border: solid 1px #5c3478;
+    border-radius: 3px;
+    display: inline-block;
+}
