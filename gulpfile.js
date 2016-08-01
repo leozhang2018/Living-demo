@@ -97,19 +97,19 @@ gulp.task('default', ['build'])
 
 
 // 静态服务器 + 监听 scss/html/js 文件
-gulp.task('serve', ['sass'], function() {
+gulp.task('serve', ['css-inject'], function() {
 
     browserSync.init({
         server: "./src"
     });
-    gulp.watch("src/css/*.css", ['sass']);
+    gulp.watch("src/css/*.css", ['css-inject']);
     gulp.watch("src/*.html").on('change', reload);
     gulp.watch("src/living/*.html").on('change', reload);
     gulp.watch("src/js/*.js").on('change', reload);
 });
 
 // 将编译后的 css 将注入到浏览器里实现更新
-gulp.task('sass', function() {
+gulp.task('css-inject', function() {
     return gulp.src(paths.style)
         .pipe(gulp.dest("src/css"))
         .pipe(reload({stream: true}));

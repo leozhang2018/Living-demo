@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel='stylesheet' href="../css/player.css">
+    <link rel="stylesheet" href="../css/living_pc.css">
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="container">
+            <video id="video" class="video-js vjs-default-skin" width="360" height="640" preload poster="http://image.huajiao.com/b8e7318c6517666f9a79dd618c9b4d60-360_640.jpg" v-bind:src="srcUrl">
+                <!-- <source v-bind:src="srcUrl" type="application/x-mpegURL"> -->
+            </video>
+            <div class="player_btn">
+                <div class="player_pause" v-bind:style="styleObject" v-on:click="play" style=""></div>
+                <div class="player_waiting" style=""></div>
+                <div class="player_warning" style=""></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer"><span class="copyright">© 2011 - 2016 Qiniu Inc. All Rights Reserved</span></footer>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <!-- <script src="../js/app.js"></script> -->
+    <script type="text/javascript" src="../js/video.js"></script>
+    <script type="text/javascript" src="../js/videojs-contrib-hls.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script>
+        //视频播放模型
+        var videoModel = {
+            name: 'Vue.js',
+            //播放器样式
+            styleObject: {},
+            user: {},
+            uId: 0,
+            srcUrl: ''
+        }
+        var vm = new Vue({
+            el: '#app',
+            data: videoModel,
+            // 页面加载完成
+            ready: function() {
+                var urlParams = getUrlParams();
+                if (!urlParams['uId'] || !urlParams['srcUrl']) {
+                    return;
+                }
+                this.uId = urlParams['uId'];
+                this.srcUrl = urlParams['srcUrl'];
+                console.log(urlParams);
+                document.title = this.uId + " " + "is Living";
+
+                // var params = {
+                //     zId: this.zId,
+                //     lastMId: 0,
+                // }
+                // queryApi('/z/msg', params, this.zMsgSucc)
+                //
+                // this.videoObj = document.getElementById('video')
+                //
+                // if (this.videoObj) {
+                //     this.videoObj.addEventListener('loadedmetadata', function() {
+                //         containerVM.videoObj.play()
+                //     })
+                //     this.videoObj.addEventListener('error', function() {
+                //         containerVM.videoObj.load()
+                //     })
+                //     setInterval('containerVM.checkVideo()', 3000)
+                // }
+                // setTimeout('containerVM.showDownload()', 30000)
+                //
+                // var params = {
+                //     pId: this.pId,
+                //     sId: 1,
+                //     channel: this.channel,
+                // }
+                // queryApi('/app/stat', params)
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                play: function(event) {
+                    // 方法内 `this` 指向 vm
+                    console.log('Hello ' + this.name + '!');
+                    // `event` 是原生 DOM 事件
+                    console.log(event.target.className);
+                    //开始播放
+                    videojs('video').ready(function() {
+                        var Player = this;
+                        // EXAMPLE: Start playing the video.
+                        Player.play();
+                        console.log(Player);
+
+                    });
+                    //隐藏播放 btn
+                    this.styleObject = {
+                        display: 'none'
+                    }
+                }
+            },
+
+        })
+    </script>
+</body>
+
+</html>

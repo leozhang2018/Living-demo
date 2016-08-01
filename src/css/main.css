@@ -33,7 +33,7 @@ a, a:focus, a:hover, a:visited {
 .logo {
     width: 100px;
     height: 100px;
-    box-shadow: 0px 10px 25px rgba(136, 136, 136, 0.5);
+    box-shadow: 0px 10px 25px rgba(136, 136, 136, 0.3);
     border-radius: 17px;
 }
 .title {
@@ -108,12 +108,10 @@ a, a:focus, a:hover, a:visited {
     opacity: 0.3;
 }
 .footer {
-height: 13px;
-margin-top: 185px;
-margin-bottom: 62px;
+    height: 13px;
+    margin-top: 185px;
 }
 .footer .copyright {
-    /*bottom: 6.888888888888%;*/
     line-height: 13px;
     text-align: center;
     opacity: 0.2;

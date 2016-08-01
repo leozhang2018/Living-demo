@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel='stylesheet' href="../css/player.css">
+    <link rel="stylesheet" href="../css/living_pc.css">
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="app_info">
+            <img class="logo" src="../img/logo.png">
+            <div class="app_desc">
+                <h2>LIVING</h2>
+                <p>Real life in real-time.</p>
+            </div>
+            <div class="download">
+                <a class="download-btn" href="#TODO"><span class="apple-logo"></span>iOS</a>
+            </div>
+        </div>
+        <div class="container">
+            <video id="video" style="width: 360px;height: 640px;" preload poster="../img/poster-360_640.jpg">
+                <source v-bind:src="srcUrl" type="application/x-mpegURL" />
+            </video>
+            <div class="player_btn">
+                <div class="player_pause" v-bind:style="styleObject" v-on:click="play" style=""></div>
+                <div class="player_waiting" style=""></div>
+                <div class="player_warning" style=""></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer"><span class="copyright">© 2011 - 2016 Qiniu Inc. All Rights Reserved</span></footer>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/video.js"></script>
+    <script type="text/javascript" src="../js/videojs-contrib-hls.js"></script>
+
+    <script>
+        // http://localhost:3000/living/pc.html?uId=123455&srcUrl=http%3a%2f%2f7u2eut.com1.z0.glb.clouddn.com%2fapp_store.mp4&poster=httpm3u8poster
+        //视频播放模型
+        var videoModel = {
+            name: 'Vue.js',
+            //播放器 css 样式
+            styleObject: {},
+            user: {},
+            uId: 0,
+            srcUrl: ''
+        }
+        var vm = new Vue({
+            el: '#app',
+            data: videoModel,
+            // 页面加载完成
+            ready: function() {
+                var urlParams = getUrlParams();
+                if (!urlParams['uId'] || !urlParams['srcUrl']) {
+                    return;
+                }
+                this.uId = urlParams['uId'];
+                this.srcUrl = urlParams['srcUrl'];
+                console.log(urlParams);
+                document.title = this.uId + " " + "正在直播";
+                console.log("参数获取完毕");
+
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                play: function(event) {
+                    // 方法内 `this` 指向 vm
+                    console.log('Hello ' + this.name + '!');
+                    // `event` 是原生 DOM 事件
+                    console.log(event.target.className);
+                    //开始播放
+                    var player = videojs('video', {
+                            /* Options */
+                        },
+                        function() {
+                            console.log('播放就绪');
+                            console.log(this);
+
+                            this.play();
+                            // 监听播放结束事件
+                            this.on('ended', function() {
+                                console.log('播放结束');
+                            });
+                        });
+                    //隐藏播放 btn
+                    this.styleObject = {
+                        display: 'none'
+                    };
+
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+html {
+    height: 100%;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft Yahei", Arial, Verdana, sans-serif;
+}
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    background: linear-gradient(-180deg, #E2E3E3 0%, #FFFFFF 59%, #FFFFFF 100%) no-repeat;
+    overflow: hidden;
+}
+dd, dl, dt, li, ol, ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0
+}
+a, a:focus, a:hover, a:visited {
+    text-decoration: none;
+    outline: 0
+}
+#app {
+    width: 360px;
+    height: 640px;
+    /*margin-top: 52px;*/
+}
+.app_info {
+    width: 100%;
+    height: 15%;
+    /*background-color: yellow;*/
+}
+.app_info .logo {
+    float: left;
+    width: 40px;
+    height: 40px;
+    margin-top: 34px;
+    margin-left: 12px;
+    background: #FFFFFF;
+    box-shadow: 0px 7px 16px 0px rgba(0, 0, 0, 0.09);
+    border-radius: 8px;
+}
+.app_info .app_desc {
+    float: left;
+    margin-left: 12px;
+}
+.app_info h2 {
+    margin-top: 33px;
+    margin-bottom: -10px;
+    font-family: Sailec-Medium;
+    font-size: 18px;
+    color: #303030;
+    letter-spacing: 0px;
+}
+.app_info p {
+    font-family: SFUIText-Light;
+    font-size: 11px;
+    color: #4E4E4E;
+    letter-spacing: 0.12px;
+}
+.download .download-btn {
+    float: right;
+    display: inline-block;
+    width: 88px;
+    height: 38px;
+    margin-top: 34px;
+    margin-right: 12px;
+    background: rgba(0, 0, 0, 0.92);
+    box-shadow: 0px 7px 17px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 71.42px;
+    font-family: SFUIText-Light;
+    font-size: 12px;
+    color: #FFFFFF;
+    transition: all .3s ease;
+}
+.download .download-btn .apple-logo {
+    display: inline-block;
+    background: url(../img/apple-logo.png) no-repeat;
+    margin-top: 12px;
+    margin-left: 21px;
+    padding-left: 9px;
+    height: 13px;
+    width: 11px;
+    background-size: contain;
+}
+.container {
+    /*background-color: blue;*/
+    background-color: transparent;
+    box-shadow: 0px 14px 32px 0px rgba(0,0,0,0.14);
+}
+.container .player_btn {
+    position: absolute;
+    width: 360px;
+    height: 93px;
+    top: 44%;
+}
+.container .player_btn .player_pause {
+    width: 93px;
+    height: 93px;
+    position: relative;
+    margin: 0 auto;
+    background-image: url(../img/player_pause.png);
+    background-size: contain;
+}
+.footer {
+    height: 13px;
+    margin-top: 185px;
+}
+.footer .copyright {
+    line-height: 13px;
+    text-align: center;
+    opacity: 0.2;
+    font-family: SFUIText-Regular;
+    font-size: 11px;
+    color: #000000;
+}
