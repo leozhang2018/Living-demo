@@ -3,18 +3,31 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title></title>
     <link rel="stylesheet" href="../css/common.css">
-    <link rel='stylesheet' href="../css/player.css">
-    <link rel="stylesheet" href="../css/living_pc.css">
+    <!-- <link rel='stylesheet' href="../css/player.css"> -->
+    <link rel='stylesheet' href="../css/all_hidden.css">
+    <link rel="stylesheet" href="../css/living_mobile.css">
 </head>
 
 <body>
 
     <div id="app">
+        <div class="app_info">
+            <img class="logo" src="../img/logo.png">
+            <div class="app_desc">
+                <h2>LIVING</h2>
+                <p>Real life in real-time.</p>
+            </div>
+            <div class="download">
+                <a class="download-btn" href="#TODO"><span class="apple-logo"></span>iOS</a>
+            </div>
+        </div>
         <div class="container">
-            <video id="video" class="video-js vjs-default-skin" width="360" height="640" preload poster="http://image.huajiao.com/b8e7318c6517666f9a79dd618c9b4d60-360_640.jpg" v-bind:src="srcUrl">
-                <!-- <source v-bind:src="srcUrl" type="application/x-mpegURL"> -->
+            <video id="video" x-webkit-airplay="true" preload autoplay style="width:100%; height:640;" v-bind:poster="posterAddr">
+                <source v-bind:src="srcUrl" v-bind:type="contentType" />
             </video>
             <div class="player_btn">
                 <div class="player_pause" v-bind:style="styleObject" v-on:click="play" style=""></div>
@@ -24,61 +37,72 @@
         </div>
     </div>
 
-    <footer class="footer"><span class="copyright">© 2011 - 2016 Qiniu Inc. All Rights Reserved</span></footer>
+    <footer style="display:none"><span class="copyright">© 2011 - 2016 Qiniu Inc. All Rights Reserved</span></footer>
     <script type="text/javascript" src="../js/vue.js"></script>
-    <!-- <script src="../js/app.js"></script> -->
+    <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript" src="../js/video.js"></script>
     <script type="text/javascript" src="../js/videojs-contrib-hls.js"></script>
-    <script type="text/javascript" src="../js/common.js"></script>
+
     <script>
-        //视频播放模型
+        // http://localhost:3000/living/pc.html?uId=123455&srcUrl=http%3a%2f%2f7u2eut.com1.z0.glb.clouddn.com%2fapp_store.mp4&poster=httpm3u8poster
+        // Model
         var videoModel = {
             name: 'Vue.js',
-            //播放器样式
+            //播放器 css 样式
             styleObject: {},
             user: {},
             uId: 0,
-            srcUrl: ''
+            srcUrl: '',
+            contentType: '',
+            posterAddr: '',
         }
         var vm = new Vue({
             el: '#app',
             data: videoModel,
             // 页面加载完成
             ready: function() {
+                //url 信息
                 var urlParams = getUrlParams();
+                var userAgent = uaCheck();
+                var flashInstalled = hasFlash();
                 if (!urlParams['uId'] || !urlParams['srcUrl']) {
+                    alert("URL 参数错误");
                     return;
                 }
+                //用户 ID
                 this.uId = urlParams['uId'];
-                this.srcUrl = urlParams['srcUrl'];
-                console.log(urlParams);
-                document.title = this.uId + " " + "is Living";
+                //播放源地址 URL
+                // this.srcUrl = urlParams['srcUrl'];
+                // 设置 title
+                document.title = this.uId + " " + "正在直播";
+                this.posterAddr = "http://o9y3zdz8x.bkt.clouddn.com/poster-360_640.jpg";
+                // 移动端
+                if (userAgent.mobile == true && userAgent.logic_resolution_width < 960) {
+                    this.srcUrl = "http://pl2-hls.live.huajiao.com/live_huajiao_v2/_LC_ps2_5222335914702037531188149_OX/index.m3u8";
+                    this.contentType = "application/x-mpegURL";
+                    console.log(this.contentType);
+                }
+                //PC 分辨率 > 960 falsh 已安装
+                if (userAgent.mobile == false && userAgent.logic_resolution_width > 960) {
+                    this.srcUrl = "http://o9y3zdz8x.bkt.clouddn.com/test.flv";
+                    this.contentType = "video/x-flv";
+                    videojs.options.flash.swf = "../js/video-js.swf";
+                    console.log(this.contentType);
 
-                // var params = {
-                //     zId: this.zId,
-                //     lastMId: 0,
-                // }
-                // queryApi('/z/msg', params, this.zMsgSucc)
-                //
-                // this.videoObj = document.getElementById('video')
-                //
-                // if (this.videoObj) {
-                //     this.videoObj.addEventListener('loadedmetadata', function() {
-                //         containerVM.videoObj.play()
-                //     })
-                //     this.videoObj.addEventListener('error', function() {
-                //         containerVM.videoObj.load()
-                //     })
-                //     setInterval('containerVM.checkVideo()', 3000)
-                // }
-                // setTimeout('containerVM.showDownload()', 30000)
-                //
-                // var params = {
-                //     pId: this.pId,
-                //     sId: 1,
-                //     channel: this.channel,
-                // }
-                // queryApi('/app/stat', params)
+                }
+                //PC falsh 未安装切换至 HTML5 video
+                if (userAgent.mobile == false && userAgent.logic_resolution_width > 960 && flashInstalled == false) {
+                    this.srcUrl = "http://pl2-hls.live.huajiao.com/live_huajiao_v2/_LC_ps2_5222335914702037531188149_OX/index.m3u8";
+                    this.contentType = "x-mpegURL";
+                    console.log(this.contentType);
+
+                }
+
+                console.log("UA 信息");
+                console.log(userAgent);
+                console.log("播放器地址参数");
+                console.log(urlParams);
+
             },
             // 在 `methods` 对象中定义方法
             methods: {
@@ -88,20 +112,38 @@
                     // `event` 是原生 DOM 事件
                     console.log(event.target.className);
                     //开始播放
-                    videojs('video').ready(function() {
-                        var Player = this;
-                        // EXAMPLE: Start playing the video.
-                        Player.play();
-                        console.log(Player);
-
-                    });
+                    var player = videojs('video', {
+                            /* Options */
+                        },
+                        function() {
+                            console.log('播放就绪');
+                            // console.log(this);
+                            var that = this;
+                            // window.setInterval(function() {
+                            //     console.log(debugHLS(that));
+                            // }, 5000);
+                            window.setInterval(function(videoObj) {
+                                console.log("readyState:" + that.readyState());
+                                // that.play();
+                            }, 1000);
+                            this.play();
+                            // 监听播放结束事件
+                            this.on('ended', function() {
+                                console.log('播放结束');
+                            });
+                        });
                     //隐藏播放 btn
                     this.styleObject = {
                         display: 'none'
+                    };
+
+                },
+                checkVideo: function() {
+                    if (this.videoObj.readyState == 2) {
+                        this.videoObj.load();
                     }
                 }
-            },
-
+            }
         })
     </script>
 </body>

@@ -1,4 +1,7 @@
-//工具函数
+/*工具函数*/
+
+
+// 获取 URL 参数
 function getUrlParams(url) {
     if (!url) {
         url = window.location.href;
@@ -17,4 +20,79 @@ function getUrlParams(url) {
     } else {
         return {};
     }
+}
+
+//UA 检测
+function uaCheck() {
+    var ua = navigator.userAgent.toLowerCase();
+    var resolution = window.screen;
+    var deviceInfo = {
+        ua: ua,
+        logic_resolution_width: resolution.width,
+        logic_resolution: resolution.width + "x" + resolution.height,
+        physic_resolution: resolution.width * window.devicePixelRatio,
+        webkit: ua.indexOf('applewebkit') !== -1, //webkit
+        trident: ua.indexOf('trident') !== -1, //ie
+        presto: ua.indexOf('presto') !== -1, //opera
+        gecko: ua.indexOf('gecko') !== -1 && ua.indexOf('khtml') == -1, //ff
+        ios: !!ua.match(/\(i[^;]+;( u;)? cpu.+mac os x/), //ios
+        android: ua.indexOf('android') !== -1 || ua.indexOf('linux') !== -1, //android 或 uc
+        mobile: !!ua.match(/applewebkit.*mobile/), //移动终端
+        weixin: ua.indexOf('micromessenger') !== -1, //微信
+        qq: ua.match(/\sqq/i) == " qq" //QQ
+    };
+    return deviceInfo;
+}
+
+//插件检测
+function hasPlugin(name) {
+    name = name.toLowerCase();
+    for (var i = 0; i < navigator.plugins.length; i++) {
+        if (navigator.plugins[i].name.toLowerCase().indexOf(name) > -1) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+function hasIEPlugin(name) {
+    try {
+        new ActiveXObject(name);
+        return true;
+    } catch (ex) {
+        return false;
+    }
+}
+
+
+// 检测所有浏览器中 Flash
+function hasFlash() {
+    // return hasPlugin("Flash") || hasIEPlugin("ShockwaveFlash.ShockwaveFlash");
+    var result = hasPlugin("Flash");
+    if (!result) {
+        result = hasIEPlugin("ShockwaveFlash.ShockwaveFlash");
+    }
+    return result;
+}
+
+
+function changeMIME() {
+
+
+}
+
+function debugHLS(player) {
+    var hls = player.tech({
+        IWillNotUseThisInPlugins: true
+    }).hls;
+    var playInfo = {
+        playlists_master: hls.playlists.master,
+        playlists_media: hls.playlists.media,
+        bandwidth: hls.bandwidth,
+
+    }
+
+    return playInfo;
+
 }

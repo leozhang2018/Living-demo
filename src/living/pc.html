@@ -6,6 +6,7 @@
     <title></title>
     <link rel="stylesheet" href="../css/common.css">
     <link rel='stylesheet' href="../css/player.css">
+    <!-- <link rel="stylesheet" href="../css/all_hidden.css"> -->
     <link rel="stylesheet" href="../css/living_pc.css">
 </head>
 
@@ -23,8 +24,8 @@
             </div>
         </div>
         <div class="container">
-            <video id="video" style="width: 360px;height: 640px;" preload poster="../img/poster-360_640.jpg">
-                <source v-bind:src="srcUrl" type="application/x-mpegURL" />
+            <video id="video" x-webkit-airplay="true" preload autoplay style="width: 360px;height: 640px;" v-bind:poster="posterAddr">
+                <source v-bind:src="srcUrl" v-bind:type="contentType" />
             </video>
             <div class="player_btn">
                 <div class="player_pause" v-bind:style="styleObject" v-on:click="play" style=""></div>
@@ -42,29 +43,64 @@
 
     <script>
         // http://localhost:3000/living/pc.html?uId=123455&srcUrl=http%3a%2f%2f7u2eut.com1.z0.glb.clouddn.com%2fapp_store.mp4&poster=httpm3u8poster
-        //视频播放模型
+        // Model
         var videoModel = {
             name: 'Vue.js',
             //播放器 css 样式
             styleObject: {},
             user: {},
             uId: 0,
-            srcUrl: ''
+            srcUrl: '',
+            contentType: '',
+            posterAddr: '',
         }
         var vm = new Vue({
             el: '#app',
             data: videoModel,
             // 页面加载完成
             ready: function() {
+                //url 信息
                 var urlParams = getUrlParams();
+                var userAgent = uaCheck();
+                var flashInstalled =hasFlash();
                 if (!urlParams['uId'] || !urlParams['srcUrl']) {
+                    alert("URL 参数错误");
                     return;
                 }
+                //用户 ID
                 this.uId = urlParams['uId'];
-                this.srcUrl = urlParams['srcUrl'];
-                console.log(urlParams);
+                //播放源地址 URL
+                // this.srcUrl = urlParams['srcUrl'];
+                // 设置 title
                 document.title = this.uId + " " + "正在直播";
-                console.log("参数获取完毕");
+                //设置 poster
+                this.posterAddr = "http://o9y3zdz8x.bkt.clouddn.com/poster-360_640.jpg";
+                // 移动端
+                if (userAgent.mobile == true && userAgent.logic_resolution_width < 960) {
+                    this.srcUrl = "m3u8_address";
+                    this.contentType = "x-mpegURL";
+                    console.log(this.contentType);
+                }
+                //PC 分辨率 > 960 falsh 已安装
+                if (userAgent.mobile == false && userAgent.logic_resolution_width > 960) {
+                    this.srcUrl = "http://o9y3zdz8x.bkt.clouddn.com/test.flv";
+                    this.contentType = "video/x-flv";
+                    videojs.options.flash.swf = "../js/video-js.swf";
+                    console.log(this.contentType);
+
+                }
+                //PC falsh 未安装切换至 HTML5 video
+                if (userAgent.mobile == false && userAgent.logic_resolution_width > 960 && flashInstalled == false) {
+                  this.srcUrl = "m3u8_address";
+                  this.contentType = "x-mpegURL";
+                  console.log(this.contentType);
+
+                }
+
+                console.log("UA 信息");
+                console.log(userAgent);
+                console.log("播放器地址参数");
+                console.log(urlParams);
 
             },
             // 在 `methods` 对象中定义方法
