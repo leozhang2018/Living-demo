@@ -3,11 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title></title>
     <link rel="stylesheet" href="../css/common.css">
-    <link rel='stylesheet' href="../css/player.css">
-    <!-- <link rel="stylesheet" href="../css/all_hidden.css"> -->
-    <link rel="stylesheet" href="../css/living_pc.css">
+    <!-- <link rel='stylesheet' href="../css/player.css"> -->
+    <link rel="stylesheet" href="../css/all_hidden.css">
+    <!-- <link rel="stylesheet" href="../css/living_pc.css"> -->
+    <link rel="stylesheet" href="../css/combine.css">
 </head>
 
 <body>
@@ -24,7 +27,7 @@
             </div>
         </div>
         <div class="container">
-            <video id="video" x-webkit-airplay="true" preload autoplay style="width: 360px;height: 640px;" v-bind:poster="posterAddr">
+            <video id="video" x-webkit-airplay="true" preload autoplay v-bind:poster="posterAddr">
                 <source v-bind:src="srcUrl" v-bind:type="contentType" />
             </video>
             <div class="player_btn">
@@ -62,7 +65,7 @@
                 //url 信息
                 var urlParams = getUrlParams();
                 var userAgent = uaCheck();
-                var flashInstalled =hasFlash();
+                var flashInstalled = hasFlash();
                 if (!urlParams['uId'] || !urlParams['srcUrl']) {
                     alert("URL 参数错误");
                     return;
@@ -77,7 +80,7 @@
                 this.posterAddr = "http://o9y3zdz8x.bkt.clouddn.com/poster-360_640.jpg";
                 // 移动端
                 if (userAgent.mobile == true && userAgent.logic_resolution_width < 960) {
-                    this.srcUrl = "m3u8_address";
+                    this.srcUrl = "http://pl2-hls.live.huajiao.com/live_huajiao_v2/_LC_ps2_5222335914702037531188149_OX/index.m3u8";
                     this.contentType = "x-mpegURL";
                     console.log(this.contentType);
                 }
@@ -91,9 +94,9 @@
                 }
                 //PC falsh 未安装切换至 HTML5 video
                 if (userAgent.mobile == false && userAgent.logic_resolution_width > 960 && flashInstalled == false) {
-                  this.srcUrl = "m3u8_address";
-                  this.contentType = "x-mpegURL";
-                  console.log(this.contentType);
+                    this.srcUrl = "m3u8_address";
+                    this.contentType = "x-mpegURL";
+                    console.log(this.contentType);
 
                 }
 
