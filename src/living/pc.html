@@ -27,11 +27,11 @@
             </div>
         </div>
         <div class="container">
-            <video id="video" x-webkit-airplay="true" preload autoplay v-bind:poster="posterAddr">
+            <video id="video" x-webkit-airplay="true" v-bind:style="videoStyleObject" preload autoplay v-bind:poster="posterAddr">
                 <source v-bind:src="srcUrl" v-bind:type="contentType" />
             </video>
             <div class="player_btn">
-                <div class="player_pause" v-bind:style="styleObject" v-on:click="play" style=""></div>
+                <div class="player_pause" v-bind:style="styleObject" v-on:click="play"></div>
                 <div class="player_waiting" style=""></div>
                 <div class="player_warning" style=""></div>
             </div>
@@ -51,15 +51,27 @@
             name: 'Vue.js',
             //播放器 css 样式
             styleObject: {},
+            videoStyleObject: {},
             user: {},
             uId: 0,
             srcUrl: '',
             contentType: '',
             posterAddr: '',
-        }
+        };
         var vm = new Vue({
             el: '#app',
             data: videoModel,
+            created: function() {
+                window.addEventListener('blur', playerPause);
+                function playerPause() {
+                    vm.styleObject = {
+                        display: 'block'
+                    };
+                }
+            },
+            destroyed: function() {
+                window.removeEventListener('blur', this.move);
+            },
             // 页面加载完成
             ready: function() {
                 //url 信息
@@ -80,12 +92,15 @@
                 this.posterAddr = "http://o9y3zdz8x.bkt.clouddn.com/poster-360_640.jpg";
                 // 移动端
                 if (userAgent.mobile == true && userAgent.logic_resolution_width < 960) {
-                    this.srcUrl = "http://pl2-hls.live.huajiao.com/live_huajiao_v2/_LC_ps2_5222335914702037531188149_OX/index.m3u8";
-                    this.contentType = "x-mpegURL";
+                    this.srcUrl = "http://pili-live-hls.xiyounet.org/living-xiyounet/living-app.m3u8";
+                    this.contentType = "application/x-mpegURL";
+                    this.videoStyleObject = {
+                        width: '100%'
+                    }
                     console.log(this.contentType);
                 }
                 //PC 分辨率 > 960 falsh 已安装
-                if (userAgent.mobile == false && userAgent.logic_resolution_width > 960) {
+                if (userAgent.mobile == false && flashInstalled == true && userAgent.logic_resolution_width > 960) {
                     this.srcUrl = "http://o9y3zdz8x.bkt.clouddn.com/test.flv";
                     this.contentType = "video/x-flv";
                     videojs.options.flash.swf = "../js/video-js.swf";
@@ -93,9 +108,9 @@
 
                 }
                 //PC falsh 未安装切换至 HTML5 video
-                if (userAgent.mobile == false && userAgent.logic_resolution_width > 960 && flashInstalled == false) {
-                    this.srcUrl = "m3u8_address";
-                    this.contentType = "x-mpegURL";
+                if (userAgent.mobile == false && flashInstalled == false && userAgent.logic_resolution_width > 960) {
+                    this.srcUrl = "http://pili-live-hls.xiyounet.org/living-xiyounet/living-app.m3u8";
+                    this.contentType = "application/x-mpegURL";
                     console.log(this.contentType);
 
                 }
@@ -127,10 +142,11 @@
                                 console.log('播放结束');
                             });
                         });
-                    //隐藏播放 btn
+                    // 隐藏播放 btn
                     this.styleObject = {
                         display: 'none'
                     };
+
 
                 },
             }
