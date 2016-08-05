@@ -16,7 +16,7 @@
 <body>
 
     <div id="app">
-        <div class="app_info">
+        <div class="app_info" id="app_info">
             <img class="logo" src="../img/logo.png">
             <div class="app_desc">
                 <h2>LIVING</h2>
@@ -26,8 +26,8 @@
                 <a class="download-btn" href="#TODO"><span class="apple-logo"></span>iOS</a>
             </div>
         </div>
-        <div class="container">
-            <video id="video" x-webkit-airplay="true" v-bind:style="videoStyleObject" preload autoplay v-bind:poster="posterAddr">
+        <div class="container" id="container">
+            <video id="video" x-webkit-airplay="true" v-bind:style="videoStyleObject" preload v-bind:poster="posterAddr">
                 <source v-bind:src="srcUrl" v-bind:type="contentType" />
             </video>
             <div class="player_btn">
@@ -39,6 +39,7 @@
     </div>
 
     <footer class="footer"><span class="copyright">© 2011 - 2016 Qiniu Inc. All Rights Reserved</span></footer>
+    <script type="text/javascript" src="../js/dropheader.js"></script>
     <script type="text/javascript" src="../js/vue.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript" src="../js/video.js"></script>
@@ -63,6 +64,7 @@
             data: videoModel,
             created: function() {
                 window.addEventListener('blur', playerPause);
+
                 function playerPause() {
                     vm.styleObject = {
                         display: 'block'
@@ -74,6 +76,7 @@
             },
             // 页面加载完成
             ready: function() {
+                touchListener("container", "y");
                 //url 信息
                 var urlParams = getUrlParams();
                 var userAgent = uaCheck();
@@ -89,7 +92,7 @@
                 // 设置 title
                 document.title = this.uId + " " + "正在直播";
                 //设置 poster
-                this.posterAddr = "http://o9y3zdz8x.bkt.clouddn.com/poster-360_640.jpg";
+                this.posterAddr = "http://living.xiyounet.org/poster-360_640.jpg";
                 // 移动端
                 if (userAgent.mobile == true && userAgent.logic_resolution_width < 960) {
                     this.srcUrl = "http://pili-live-hls.xiyounet.org/living-xiyounet/living-app.m3u8";
