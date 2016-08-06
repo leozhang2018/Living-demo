@@ -77,11 +77,6 @@ function hasFlash() {
 }
 
 
-function changeMIME() {
-
-
-}
-
 function debugHLS(player) {
     var hls = player.tech({
         IWillNotUseThisInPlugins: true

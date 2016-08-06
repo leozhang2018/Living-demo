@@ -1,14 +1,16 @@
 function slideDownStep1(dist) {
     var header = document.getElementById("app_info");
     header.style.display = "block";
-    header.style.height = 1 - parseInt(dist) + "px";
+    // header.style.height = 50 - parseInt(dist) + "px";
     header.style.maxHeight = "15%";
-    // header.style.height = "15%";
+    header.style.height = "15%";
 }
 
 function slideUp(dist) {
     var header = document.getElementById("app_info");
-    header.style.display = "none";
+    // header.style.display = "none";
+    header.style.maxHeight = "0";
+    header.style.height = "0";
 }
 
 function touchListener(contentId, way) {
@@ -61,7 +63,7 @@ function touchListener(contentId, way) {
             console.log("结束啦: 左或者上滑");
         } else {
             console.log("结束啦: 右或者下滑");
-            slideDownStep2();
+            // slideDownStep2();
         } //右滑下滑
     }
 }
