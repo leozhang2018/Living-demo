@@ -76,6 +76,50 @@ function hasFlash() {
     return result;
 }
 
+// 播放器暂停
+function playerPause() {
+    vm.styleObject = {
+        display: 'block'
+    };
+    player.pause();
+}
+
+
+
+// // 后端查询
+// function queryBackend(uri, params, retry) {
+//     Vue.http.get(uri).then((response) => {
+//         // success callback
+//         console.log("Ajax 请求成功:")
+//         console.log(getAjaxStatus(response));
+//         return response.json();
+//     }, (response) => {
+//         // error callback
+//         console.log("Ajax 请求失败");
+//         // queryBackend(uri);
+//     });
+//
+// }
+
+
+
+/* 调试类函数*/
+
+// ajax status 信息用调试
+function getAjaxStatus(response) {
+    var response = {
+        url: response.url,
+        // get status
+        status: response.status,
+        // get status text
+        statusText: response.statusText,
+        // get all headers
+        headers: response.headers,
+        // get 'Expires' header
+        expires: response.headers['Expires']
+    };
+    return response;
+}
 
 function debugHLS(player) {
     var hls = player.tech({

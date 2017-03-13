@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="container" id="container">
-            <video id="video" x-webkit-airplay="true" v-bind:style="videoStyleObject" preload v-bind:poster="posterAddr">
+            <video id="video" x-webkit-airplay="true" v-bind:style="videoStyleObject" preload autoplay v-bind:poster="posterAddr">
                 <source v-bind:src="srcUrl" v-bind:type="contentType" />
             </video>
             <div class="player_btn">
@@ -41,6 +41,7 @@
     <footer class="footer"><span class="copyright">© 2011 - 2016 Qiniu Inc. All Rights Reserved</span></footer>
     <script type="text/javascript" src="../js/dropheader.js"></script>
     <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/vue-resource.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript" src="../js/video.js"></script>
     <script type="text/javascript" src="../js/videojs-contrib-hls.js"></script>
@@ -58,18 +59,22 @@
             srcUrl: '',
             contentType: '',
             posterAddr: '',
+            player: {},
+            videoInfo: {}
         };
         var vm = new Vue({
             el: '#app',
             data: videoModel,
             created: function() {
-                window.addEventListener('blur', playerPause);
-
-                function playerPause() {
-                    vm.styleObject = {
-                        display: 'block'
-                    };
-                }
+              //全局监听离开窗口
+                // window.addEventListener('blur', playerPause);
+                //
+                // function playerPause() {
+                //     vm.styleObject = {
+                //         display: 'block'
+                //     };
+                //     player.pause();
+                // }
             },
             destroyed: function() {
                 window.removeEventListener('blur', this.move);
@@ -95,7 +100,7 @@
                 this.posterAddr = "http://living.xiyounet.org/poster-360_640.jpg";
                 // 移动端
                 if (userAgent.mobile == true && userAgent.logic_resolution_width < 960) {
-                    this.srcUrl = "http://pili-live-hls.xiyounet.org/living-xiyounet/living-app.m3u8";
+                    this.srcUrl = "http://pl3-hls.live.huajiao.com/live_huajiao_v2/_LC_ps3_2435488214704637051571314_OX/index.m3u8";
                     this.contentType = "application/x-mpegURL";
                     this.videoStyleObject = {
                         width: '100%'
@@ -112,7 +117,7 @@
                 }
                 //PC falsh 未安装切换至 HTML5 video
                 if (userAgent.mobile == false && flashInstalled == false && userAgent.logic_resolution_width > 960) {
-                    this.srcUrl = "http://pili-live-hls.xiyounet.org/living-xiyounet/living-app.m3u8";
+                    this.srcUrl = "http://pl3-hls.live.huajiao.com/live_huajiao_v2/_LC_ps3_2435488214704637051571314_OX/index.m3u8";
                     this.contentType = "application/x-mpegURL";
                     console.log(this.contentType);
 
@@ -150,7 +155,19 @@
                         display: 'none'
                     };
 
+                    // 移动端失去焦点
+                    if (userAgent.mobile == true && userAgent.logic_resolution_width < 960) {
+                        //监听 window 失去焦点
+                        window.addEventListener('blur', playerPause);
+                        // 监听 visibilitychange
+                        document.addEventListener("visibilitychange", function() {
+                            if (document.visibilityState == "hidden") {
+                                console.log("Biubiubiu");
+                                playerPause();
+                            }
+                        });
 
+                    }
                 },
             }
         })

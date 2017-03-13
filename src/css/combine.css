@@ -23,6 +23,7 @@
         height: 100%;
         /*margin-top: 52px;*/
         /*background-color: blue;*/
+        overflow: hidden;
     }
     .app_info {
         width: 100%;

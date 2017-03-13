@@ -27,7 +27,7 @@ function touchListener(contentId, way) {
         console.log(event.touches[0]);
         //触点数目
         console.log(event.touches.length);
-        event.preventDefault();
+        // event.preventDefault();
         if (!event.touches.length) return;
         var touch = event.touches[0];
         if (way == "x") {
@@ -38,7 +38,7 @@ function touchListener(contentId, way) {
     }
 
     function touchMove(event) {
-        event.preventDefault();
+        // event.preventDefault();
         if (!event.touches.length) return;
         var touch = event.touches[0];
 
